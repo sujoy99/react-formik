@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFormik } from 'formik'
+import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 const initialValues = {
@@ -32,6 +32,11 @@ const YoutubeForm = () => {
 	console.log('formik.touched', formik.touched)
 
 	return (
+		<Formik
+		initialValues={initialValues}
+		validationSchema={validationSchema}
+		onSubmit={onSubmit}
+		>
 		<form onSubmit={formik.handleSubmit}>
 			<div className='form-control'>
 				<label htmlFor='name'>Name</label>
@@ -83,6 +88,7 @@ const YoutubeForm = () => {
 
 			<button type='submit'>Submit</button>
 		</form>
+		</Formik>
 	)
 }
 
