@@ -16,7 +16,7 @@ const onSubmit = values => {
 }
 
 const validationSchema = Yup.object({
-	name: Yup.string().required('Required'),
+	name: Yup.string().required('Required first'),
 	email: Yup.string()
 		.email('Invalid email format')
 		.required('Required'),
@@ -40,7 +40,7 @@ const YoutubeForm = () => {
 						id='name'
 						name='name'
 					/>
-					<ErrorMessage name='name' component={TextError}/>
+					<ErrorMessage name='name' component={TextError} />
 				</div>
 
 				<div className='form-control'>
@@ -50,7 +50,9 @@ const YoutubeForm = () => {
 						id='email'
 						name='email'
 					/>
-					<ErrorMessage name='email' />
+					<ErrorMessage name='email'>
+						{error => <div style={{color: 'red'}}>{error}</div>}
+					</ErrorMessage>
 				</div>
 
 				<div className='form-control'>
@@ -71,28 +73,28 @@ const YoutubeForm = () => {
 						// component='textarea'
 						id='comments'
 						name='comments'
-						// validate={validateComments}
+					// validate={validateComments}
 					/>
 					<ErrorMessage name='comments' />
 				</div>
 
 				<div className='form-control'>
-              <label htmlFor='address'>Address</label>
-              <Field name='address'>
-                {(props) => {
-									console.log('render props',props)
-									const { field, form, meta } = props
-                  return (
-                    <div>
-                      <input type='text' id="address" {...field} />
-                      {meta.touched && meta.error ? (
-                        <div>{meta.error}</div>
-                      ) : null}
-                    </div>
-                  )
-                }}
-              </Field>
-            </div>
+					<label htmlFor='address'>Address</label>
+					<Field name='address'>
+						{(props) => {
+							console.log('render props', props)
+							const { field, form, meta } = props
+							return (
+								<div>
+									<input type='text' id="address" {...field} />
+									{meta.touched && meta.error ? (
+										<div>{meta.error}</div>
+									) : null}
+								</div>
+							)
+						}}
+					</Field>
+				</div>
 
 				<button type='submit'>Submit</button>
 			</Form>
