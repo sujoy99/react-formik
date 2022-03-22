@@ -13,6 +13,7 @@ const initialValues = {
 		facebook: '',
 		twitter: ''
 	},
+	phoneNumbers: ['', ''],
 }
 
 const onSubmit = values => {
@@ -25,8 +26,17 @@ const validationSchema = Yup.object({
 		.email('Invalid email format')
 		.required('Required'),
 	channel: Yup.string().required('Required'),
-	address: Yup.string().required('Required')
+	address: Yup.string().required('Required'),
+	// phoneNumbers: Yup.string().required('neccessary')
 })
+
+const validatePrimaryPh = value => {
+	let error
+	if (!value) {
+	  error = 'Required'
+	}
+	return error
+  }
 
 const YoutubeForm = () => {
 
@@ -82,6 +92,7 @@ const YoutubeForm = () => {
 					<ErrorMessage name='comments' />
 				</div>
 
+				{/* render property pattern starts  */}
 				<div className='form-control'>
 					<label htmlFor='address'>Address</label>
 					<Field name='address'>
@@ -99,7 +110,9 @@ const YoutubeForm = () => {
 						}}
 					</Field>
 				</div>
+				{/* render property pattern ends  */}
 
+				{/* nested object starts  */}
 				<div className='form-control'>
 					<label htmlFor='facebook'>Facebook profile</label>
 					<Field type='text' id='facebook' name='social.facebook' />
@@ -109,6 +122,22 @@ const YoutubeForm = () => {
 					<label htmlFor='twitter'>Twitter profile</label>
 					<Field type='text' id='twitter' name='social.twitter' />
 				</div>
+				{/* nested object ends  */}
+
+				{/* array starts  */}
+				<div className='form-control'>
+					<label htmlFor='primaryPh'>Primary phone number</label>
+					<Field type='text' id='primaryPh' name='phoneNumbers[0]' validate={validatePrimaryPh}/>
+					<ErrorMessage name='phoneNumbers[0]'>
+						{error => <div style={{ color: 'red' }}>neccessary</div>}
+					</ErrorMessage>
+				</div>
+
+				<div className='form-control'>
+					<label htmlFor='secondaryPh'>Secondary phone number</label>
+					<Field type='text' id='secondaryPh' name='phoneNumbers[1]' />
+				</div>
+				{/* array ends  */}
 
 				<button type='submit'>Submit</button>
 			</Form>
