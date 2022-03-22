@@ -1,5 +1,5 @@
 import React from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
 import TextError from './TextError'
 import * as Yup from 'yup'
 
@@ -14,6 +14,7 @@ const initialValues = {
 		twitter: ''
 	},
 	phoneNumbers: ['', ''],
+	phNumbers: ['']
 }
 
 const onSubmit = values => {
@@ -33,10 +34,19 @@ const validationSchema = Yup.object({
 const validatePrimaryPh = value => {
 	let error
 	if (!value) {
-	  error = 'Required'
+		error = 'Required'
 	}
 	return error
-  }
+}
+
+const validatePhNumbers = value => {
+	console.log("value",value);
+	let error
+	if (!value) {
+		error = 'Required!!'
+	}
+	return error
+}
 
 const YoutubeForm = () => {
 
@@ -127,7 +137,7 @@ const YoutubeForm = () => {
 				{/* array starts  */}
 				<div className='form-control'>
 					<label htmlFor='primaryPh'>Primary phone number</label>
-					<Field type='text' id='primaryPh' name='phoneNumbers[0]' validate={validatePrimaryPh}/>
+					<Field type='text' id='primaryPh' name='phoneNumbers[0]' validate={validatePrimaryPh} />
 					<ErrorMessage name='phoneNumbers[0]'>
 						{error => <div style={{ color: 'red' }}>neccessary</div>}
 					</ErrorMessage>
@@ -138,6 +148,44 @@ const YoutubeForm = () => {
 					<Field type='text' id='secondaryPh' name='phoneNumbers[1]' />
 				</div>
 				{/* array ends  */}
+
+				{/* field array starts  */}
+				<div className='form-control'>
+					<label>List of phone numbers</label>
+					<FieldArray name='phNumbers'>
+						{fieldArrayProps => {
+							const { push, remove, form } = fieldArrayProps
+							const { values } = form
+							const { phNumbers } = values
+							// console.log('fieldArrayProps', fieldArrayProps)
+							// console.log('Form errors', form.errors)
+							return (
+								<div>
+									{phNumbers.map((phNumber, index) => (
+										<div key={index}>
+											<Field name={`phNumbers[${index}]`} validate={validatePhNumbers} />
+											{index > 0 && (
+												<button type='button' onClick={() => remove(index)}>
+													-
+												</button>
+											)}
+											<button type='button' onClick={() => push('')}>
+												+
+											</button>
+										</div>
+
+									))}
+
+									<ErrorMessage name='phNumbers'>
+										{error => <div style={{ color: 'red' }}>{error}</div>}
+									</ErrorMessage>
+
+								</div>
+							)
+						}}
+					</FieldArray>
+				</div>
+				{/* field array ends  */}
 
 				<button type='submit'>Submit</button>
 			</Form>
