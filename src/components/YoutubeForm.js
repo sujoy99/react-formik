@@ -17,8 +17,12 @@ const initialValues = {
 	phNumbers: ['']
 }
 
-const onSubmit = values => {
+const onSubmit = (values, submitProps) => {
 	console.log('Form data', values)
+	console.log('submitProps', submitProps)
+
+	setTimeout(() => submitProps.setSubmitting(false), 2000);
+	
 }
 
 const validationSchema = Yup.object({
@@ -65,7 +69,7 @@ const YoutubeForm = () => {
 			onSubmit={onSubmit}
 			// validateOnChange={false}
 			// validateOnBlur={false}
-			// validateOnMount
+			validateOnMount
 		>
 
 			{/* manually triggering validation starts */}
@@ -234,7 +238,7 @@ const YoutubeForm = () => {
 							</button> */}
 
 							<button type='submit'
-							disabled={!(formik.dirty && formik.isValid)}
+								disabled={!formik.isValid || formik.isSubmitting}
 							>Submit</button>
 						</Form>
 					)
