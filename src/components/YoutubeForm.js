@@ -65,7 +65,7 @@ const YoutubeForm = () => {
 			onSubmit={onSubmit}
 			// validateOnChange={false}
 			// validateOnBlur={false}
-			validateOnMount
+			// validateOnMount
 		>
 
 			{/* manually triggering validation starts */}
@@ -234,7 +234,7 @@ const YoutubeForm = () => {
 							</button> */}
 
 							<button type='submit'
-							disabled={!formik.isValid}
+							disabled={!(formik.dirty && formik.isValid)}
 							>Submit</button>
 						</Form>
 					)
