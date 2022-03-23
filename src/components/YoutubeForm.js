@@ -63,14 +63,15 @@ const YoutubeForm = () => {
 			initialValues={initialValues}
 			validationSchema={validationSchema}
 			onSubmit={onSubmit}
-		// validateOnChange={false}
-		// validateOnBlur={false}
+			// validateOnChange={false}
+			// validateOnBlur={false}
+			validateOnMount
 		>
 
 			{/* manually triggering validation starts */}
 			{
 				formik => {
-					console.log('Formik props', formik)
+					// console.log('Formik props', formik)
 					return (
 						<Form>
 							<div className='form-control'>
@@ -203,7 +204,7 @@ const YoutubeForm = () => {
 							</div>
 							{/* field array ends  */}
 
-							<button
+							{/* <button
 								type='button'
 								onClick={() => formik.validateField('comments')}
 							>
@@ -230,9 +231,11 @@ const YoutubeForm = () => {
 								}
 							>
 								Visit all
-							</button>
+							</button> */}
 
-							<button type='submit'>Submit</button>
+							<button type='submit'
+							disabled={!formik.isValid}
+							>Submit</button>
 						</Form>
 					)
 				}
