@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Formik, Form, Field, ErrorMessage, FieldArray, FastField } from 'formik'
 import TextError from './TextError'
 import * as Yup from 'yup'
@@ -17,12 +17,26 @@ const initialValues = {
 	phNumbers: ['']
 }
 
+const savedValues = {
+	name: 'Vishwas',
+	email: 'v@example.com',
+	channel: 'codevolution',
+	comments: 'Welcome to Formik',
+	address: '221B Baker Street',
+	social: {
+		facebook: '',
+		twitter: ''
+	},
+	phoneNumbers: ['', ''],
+	phNumbers: ['']
+}
+
 const onSubmit = (values, submitProps) => {
 	console.log('Form data', values)
 	console.log('submitProps', submitProps)
 
 	setTimeout(() => submitProps.setSubmitting(false), 2000);
-	
+
 }
 
 const validationSchema = Yup.object({
@@ -62,14 +76,17 @@ const validatePhNumbers = value => {
 
 const YoutubeForm = () => {
 
+	const [formValues, setFormValues] = useState(null)
+
 	return (
 		<Formik
-			initialValues={initialValues}
+		initialValues={formValues || initialValues}
 			validationSchema={validationSchema}
 			onSubmit={onSubmit}
+			enableReinitialize
 			// validateOnChange={false}
 			// validateOnBlur={false}
-			validateOnMount
+			// validateOnMount
 		>
 
 			{/* manually triggering validation starts */}
@@ -134,7 +151,7 @@ const YoutubeForm = () => {
 											<div>
 												<input type='text' id="address" {...field} />
 												{meta.touched && meta.error ? (
-													<div>{meta.error}</div>
+													<div style={{color: 'red'}}>{meta.error}</div>
 												) : null}
 											</div>
 										)
@@ -236,6 +253,10 @@ const YoutubeForm = () => {
 							>
 								Visit all
 							</button> */}
+
+							<button type='button' onClick={() => setFormValues(savedValues)}>
+								Load saved data
+							</button>
 
 							<button type='submit'
 								disabled={!formik.isValid || formik.isSubmitting}
