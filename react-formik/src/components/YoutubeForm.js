@@ -35,7 +35,10 @@ const onSubmit = (values, submitProps) => {
 	console.log('Form data', values)
 	console.log('submitProps', submitProps)
 
-	setTimeout(() => submitProps.setSubmitting(false), 2000);
+	setTimeout(() => {
+		submitProps.setSubmitting(false)
+		submitProps.resetForm()
+	} , 2000);
 
 }
 
