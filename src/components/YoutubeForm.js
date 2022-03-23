@@ -31,6 +31,14 @@ const validationSchema = Yup.object({
 	// phoneNumbers: Yup.string().required('neccessary')
 })
 
+const validateComments = value => {
+  let error
+  if (!value) {
+    error = 'Required'
+  }
+  return error
+}
+
 const validatePrimaryPh = value => {
 	let error
 	if (!value) {
@@ -40,7 +48,7 @@ const validatePrimaryPh = value => {
 }
 
 const validatePhNumbers = value => {
-	console.log("value", value);
+	// console.log("value", value);
 	let error
 	if (!value) {
 		error = 'Required!!'
@@ -55,8 +63,8 @@ const YoutubeForm = () => {
 			initialValues={initialValues}
 			validationSchema={validationSchema}
 			onSubmit={onSubmit}
-			validateOnChange={false}
-			validateOnBlur={false}
+			// validateOnChange={false}
+			// validateOnBlur={false}
 		>
 			<Form>
 				<div className='form-control'>
@@ -99,9 +107,9 @@ const YoutubeForm = () => {
 						// component='textarea'
 						id='comments'
 						name='comments'
-					// validate={validateComments}
+					validate={validateComments}
 					/>
-					<ErrorMessage name='comments' />
+					<ErrorMessage name='comments' component={TextError} />
 				</div>
 
 				{/* render property pattern starts  */}
@@ -109,7 +117,7 @@ const YoutubeForm = () => {
 					<label htmlFor='address'>Address</label>
 					<FastField name='address'>
 						{(props) => {
-							console.log('render props', props)
+							// console.log('render props', props)
 							const { field, form, meta } = props
 							return (
 								<div>
@@ -160,7 +168,7 @@ const YoutubeForm = () => {
 							const { values } = form
 							const { phNumbers } = values
 							// console.log('fieldArrayProps', fieldArrayProps)
-							console.log('Form errors', form.errors)
+							// console.log('Form errors', form.errors)
 							return (
 								<div>
 									{phNumbers.map((phNumber, index) => (
