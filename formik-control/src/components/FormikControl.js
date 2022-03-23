@@ -1,18 +1,24 @@
 import React from 'react'
+import Input from './Input'
+import Textarea from './Textarea'
+import Select from './Select'	
 
 const FormikControl = (props) => {
-	const { control } = props
+	const { control, ...rest } = props
 	switch (control) {
-    case 'input':
-    case 'textarea':
-    case 'select':
-    case 'radio':
-    case 'checkbox':
-    case 'date':
-    case 'chakraInput':
-    default:
-      return null
-  }
+		case 'input':
+			return <Input {...rest} />
+		case 'textarea':
+			return <Textarea {...rest} />
+		case 'select':
+			return <Select {...rest} />
+		case 'radio':
+		case 'checkbox':
+		case 'date':
+		case 'chakraInput':
+		default:
+			return null
+	}
 }
 
 export default FormikControl
